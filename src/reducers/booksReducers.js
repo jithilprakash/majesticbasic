@@ -23,10 +23,10 @@ export function booksReducers(state={
       break;
   
       case "DELETE_BOOK":
-      const currentBookToDelete =[...state.book]
+      const currentBookToDelete =[...state.books]
 
       const indexToDelete =currentBookToDelete.findIndex( function(book){
-        return book._id === action.payload._id;
+        return book._id == action.payload;
  })
     return {books:[...currentBookToDelete.slice(0,indexToDelete),...currentBookToDelete.slice(indexToDelete +1)]}
     break;

@@ -1,7 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {Panel, Col, Row, Well, Button,
-ButtonGroup, Label} from 'react-bootstrap';
+import {Modal,Panel, Col, Row, Button,ButtonGroup, Label} from 'react-bootstrap';
 import { bindActionCreators } from "redux";
 import {deleteCartItem,addToCart, updateCart  } from "../../actions/cartActions";
 
@@ -27,7 +26,19 @@ class Cart extends React.Component{
             this.props.updateCart(_id,-1)
         }
     }
-
+    open(){
+        this.setState({showModal:true})
+    }
+    close(){
+        this.setState({showModal:false})
+    }
+    
+    constructor(){
+        super();
+        this.state = {
+            showModal : false
+        }
+    }
     render(){
     if(this.props.cart[0]){
     return this.renderCart();
@@ -36,11 +47,11 @@ class Cart extends React.Component{
     }
     }
  renderEmpty(){
-     return(<div>,</div>);
+     return(<div></div>);
  }
 
  renderCart(){
-     console.log("-----inside cardjs",this.props.cart);
+    //console.log("-----inside cardjs",this.props.cart);
     const cartItemsList =  this.props.cart.map(function(cartArr){
     return(
     <Panel key={cartArr._id}>
@@ -69,16 +80,47 @@ class Cart extends React.Component{
     </Panel>
     )
     },this)
+
     return(
-    <Panel header="Cart" bsStyle="primary">
-    {cartItemsList}
+    <Panel bsStyle="primary">
+    <Panel.Heading>Cart</Panel.Heading>
+    <Panel.Body>{cartItemsList}</Panel.Body>
+    <Panel.Footer>
+    <Row>
+        <Col xs={12}>
+            <h6>Total Amount: {this.props.totalAmount}</h6>
+            <Button onClick={this.open.bind(this)} bsStyle="success" bsSize="small">
+            PROCEED TO CHECKOUT 
+            </Button>
+        </Col>
+    </Row>
+
+    </Panel.Footer>
+    <Modal show={this.state.showModal} onHide={this.close.bind(this)}>
+          <Modal.Header closeButton>
+            <Modal.Title>Thank you for shopping</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+           <h6>Your order has been saved</h6>
+           <p>you will be notified</p>
+          </Modal.Body>
+          <Modal.Footer>
+              <Col xs={6}>
+                <h6>INR. {this.props.totalAmount}</h6>
+              </Col>
+            <Button onClick={this.close.bind(this)}>Close</Button>
+          </Modal.Footer>
+        </Modal>
+    
+    
     </Panel>
     )
     }
    }
    function mapStateToProps(state){
     return{
-    cart: state.cart.cart
+    cart: state.cart.cart,
+    totalAmount : state.cart.totalAmount
     
     }
    }

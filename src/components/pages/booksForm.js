@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import {findDOMNode} from 'react-dom';
 
-import { postBooks } from "../../actions/bookActions";
+import { postBooks,deleteBooks } from "../../actions/bookActions";
 
  class BooksForm extends Component {
      handleSubmit(){
@@ -15,10 +15,19 @@ import { postBooks } from "../../actions/bookActions";
          }]
          this.props.postBooks(book);
      }
+     onDelete(){
+         let bookId = findDOMNode(this.refs.delete).value;
+         this.props.deleteBooks(bookId)
+     }
   render() {
+
+    const booksList = this.props.books.map(function(booksArr){
+        return(<option key={booksArr._id}>{booksArr._id}</option>);
+    })
     return (
       <Well>
           <Panel>
+              <Panel.Body>
               <FormGroup controlId="title">
                 <ControlLabel>Title</ControlLabel>
                 <FormControl
@@ -49,6 +58,20 @@ import { postBooks } from "../../actions/bookActions";
               <Button
               onClick = {this.handleSubmit.bind(this)}
               bsStyle='primary'>Save book</Button>
+              </Panel.Body>
+          </Panel>
+          <Panel style={{marginTop:'25px'}}>
+          <Panel.Body>
+          <FormGroup controlId="formControlsSelect">
+            <ControlLabel>Select a book id to delete</ControlLabel>
+            <FormControl ref="delete" componentClass="select" placeholder="select">
+                <option value="select">select</option>
+                {booksList}
+            </FormControl>
+            </FormGroup>
+            <Button onClick={this.onDelete.bind(this)} bsStyle="danger">Delete</Button>
+            </Panel.Body>
+           
           </Panel>
       </Well>
     )
@@ -56,7 +79,13 @@ import { postBooks } from "../../actions/bookActions";
 }
 
 function mapDispatchToProps(dispatch){
-    return  bindActionCreators({postBooks},dispatch)
+    return  bindActionCreators({postBooks,deleteBooks},dispatch)
 }
 
-export default connect(null,mapDispatchToProps)(BooksForm);
+function mapStateToProps(state){
+    return{
+        books : state.books.books
+    }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(BooksForm);
