@@ -17,9 +17,10 @@ import BooksForm from "./components/pages/booksForm";
 import Main from './main';
 import Menu from "../src/components/menu";
 import Footer from "./components/footer";
+import thunk from "redux-thunk";
 
 
-const middeware = applyMiddleware(logger);
+const middeware = applyMiddleware(thunk,logger);
 const store = createStore(reducers,middeware);
 
 // store.subscribe(function(){

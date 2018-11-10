@@ -17,6 +17,7 @@ class BookItem extends Component {
         if(this.props.cart.length > 0){
 
             let _id = this.props._id;
+            console.log("*********cart id check",_id);
             let cartIndex = this.props.cart.findIndex(function(cart){
                 return cart._id === _id;
             })
@@ -24,7 +25,7 @@ class BookItem extends Component {
                 this.props.addToCart(book)
             }
             else{
-                this.props.updateCart(_id,1)
+                this.props.updateCart(_id,1,this.props.cart)
             }
         }else{
             this.props.addToCart(book)
