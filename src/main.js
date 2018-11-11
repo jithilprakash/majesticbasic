@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import Menu from './components/menu';
 import Footer from './components/footer';
 import {  connect} from "react-redux";
+import { bindActionCreators } from "redux";
+// import {get  } from "../../actions/cartActions";
 
 class Main extends Component {
   render() {

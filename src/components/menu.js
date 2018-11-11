@@ -7,7 +7,7 @@ import { Nav,Navbar,NavItem,Badge } from "react-bootstrap";
         <Navbar inverse fixedTop>
         <Navbar.Header>
           <Navbar.Brand>
-            <a href="/">React-Bootstrap</a>
+            <a href="/">Book-Shop</a>
           </Navbar.Brand>
           <Navbar.Toggle />
         </Navbar.Header>

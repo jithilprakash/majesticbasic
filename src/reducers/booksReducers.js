@@ -8,9 +8,15 @@ export function booksReducers(state={
       return {...state,books:[...action.payload]}
       break;
       case "POST_BOOKS":
-      return {books:[...state.books,...action.payload]}
+      return {...state,books:[...state.books,...action.payload],msg:'Saved, click to continue',style:'success',
+      validation:'success'}
       break;
-  
+      case "POST_BOOKS_REJECTED":
+      return {...state,msg:'Please try later',style:'danger',validation:'error'}
+      break;
+      case "RESET_BUTTON":
+      return {...state,msg:null,style:'primary',validation:null}
+      break;
       case "DELETE_BOOK":
       const currentBookToDelete =[...state.books]
 

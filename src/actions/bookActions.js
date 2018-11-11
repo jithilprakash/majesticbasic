@@ -46,3 +46,10 @@ export function updateBooks(book){
         payload:book
     }
 }
+
+
+export function resetBooks(){
+    return {
+        type:"RESET_BUTTON"
+    }
+}
